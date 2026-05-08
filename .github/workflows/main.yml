@@ -22,7 +22,6 @@ jobs:
       # CREATE ENV FILES
       - name: Create backend .env
         run: |
-          echo "PORT=${{ secrets.PORT }}" >> backend/.env
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> backend/.env
 
       - name: Create frontend .env
