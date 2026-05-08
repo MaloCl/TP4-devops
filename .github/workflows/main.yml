@@ -18,6 +18,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      # ENV
+      - name: Create backend .env
+        run: |
+          echo "MOCK_ENV=${{ secrets.MOCK_ENV }}" >> backend/.env
 
       # BUILD IMAGES
       - name: Build frontend image
