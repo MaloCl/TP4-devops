@@ -1,0 +1,85 @@
+name: Dev CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # FRONTEND
+      - name: Install frontend deps
+        run: |
+          cd frontend
+          npm install
+
+      - name: Frontend lint
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Frontend audit
+        run: |
+          cd frontend
+          npm audit --audit-level=high
+
+      - name: Frontend tests
+        run: |
+          cd frontend
+          npm test -- --watchAll=false
+
+      # BACKEND
+      - name: Install backend deps
+        run: |
+          cd backend
+          npm install
+
+      - name: Backend lint
+        run: |
+          cd backend
+          npm run lint
+
+      - name: Backend audit
+        run: |
+          cd backend
+          npm audit --audit-level=high
+
+      - name: Backend tests
+        run: |
+          cd backend
+          npm test
+
+      # SNYK
+      - name: Install Snyk
+        run: npm install -g snyk
+
+      - name: Snyk auth
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Snyk frontend scan
+        run: |
+          cd frontend
+          snyk test
+
+      - name: Snyk backend scan
+        run: |
+          cd backend
+          snyk test
+
+      # BUILD DOCKER
+      - name: Build frontend image
+        run: docker build -t frontend ./frontend
+
+      - name: Build backend image
+        run: docker build -t backend ./backend
