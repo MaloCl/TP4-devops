@@ -19,15 +19,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # CREATE ENV FILES
-      - name: Create backend .env
-        run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> backend/.env
-
-      - name: Create frontend .env
-        run: |
-          echo "API_URL=${{ secrets.API_URL }}" >> frontend/.env
-
       # BUILD IMAGES
       - name: Build frontend image
         run: |
