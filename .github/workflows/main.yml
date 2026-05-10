@@ -53,7 +53,7 @@ jobs:
       - name: Backend audit
         run: |
           cd backend
-          npm audit --audit-level=high
+          npm audit
 
       - name: Backend tests
         run: |
