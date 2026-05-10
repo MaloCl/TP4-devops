@@ -65,7 +65,7 @@ jobs:
         run: npm install -g snyk
 
       - name: Snyk auth
-        run: snyk auth ${{ secrets.SNYK_TOKEN }} || true
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Snyk frontend scan
         run: |
