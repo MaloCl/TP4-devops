@@ -32,7 +32,7 @@ jobs:
       - name: Frontend audit
         run: |
           cd frontend
-          npm audit --audit-level=high
+          npm audit
 
       - name: Frontend tests
         run: |
